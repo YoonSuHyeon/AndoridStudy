@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.realmmemo.R
 import com.example.realmmemo.presenter.presenterRecyclerView
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.rec_view_item.view.*
 
 class RecyclerViewAdapter(private val presenter: presenterRecyclerView, private val context : Context):RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
@@ -28,6 +27,7 @@ class RecyclerViewAdapter(private val presenter: presenterRecyclerView, private 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         presenter.onBindRecyclerView(position,holder)
+
     }
 
     class  ViewHolder(view: View):RecyclerView.ViewHolder(view),

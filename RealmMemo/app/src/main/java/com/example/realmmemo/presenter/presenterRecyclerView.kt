@@ -1,12 +1,13 @@
 package com.example.realmmemo.presenter
 
 import com.example.realmmemo.view.itemView
-import com.example.realmmemo.model.Memo
+
+import com.example.realmmemo.model.Todo
 
 class presenterRecyclerView {
-    var listItems:List<Memo>
-    lateinit var item:Memo
-    constructor(listitems:List<Memo>){
+    var listItems:List<Todo>
+    lateinit var item:Todo
+    constructor(listitems:List<Todo>){
         this.listItems=listitems
     }
     fun onBindRecyclerView(position: Int,holder: itemView){
