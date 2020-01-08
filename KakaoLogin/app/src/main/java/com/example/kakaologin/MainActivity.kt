@@ -1,90 +1,79 @@
 package com.example.kakaologin
 
+import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Base64
+import android.util.Base64.NO_WRAP
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.kakao.auth.ISessionCallback
-import com.kakao.auth.KakaoSDK
 import com.kakao.auth.Session
-import com.kakao.util.exception.KakaoException
-import com.kakao.util.helper.log.Logger
+import com.kakao.util.helper.Utility.getPackageInfo
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import com.kakao.auth.KakaoAdapter as KakaoAdapter1
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var callback: SessionCallback
+    private var callback: SessionCallback = SessionCallback()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-       // getHashKey()
+        Log.d("dzz",getHashKey(applicationContext))
 
-        callback = SessionCallback()
         Session.getCurrentSession().addCallback(callback)
-        Session.getCurrentSession().checkAndImplicitOpen()
-    }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    ) {
-        if (Session.getCurrentSession().handleActivityResult(
-                requestCode,
-                resultCode,
-                data
-            )
-        ) {
-            return
-        }
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Session.getCurrentSession().removeCallback(callback)
+        Session.getCurrentSession().removeCallback(callback);
     }
-    private class SessionCallback : ISessionCallback {
-        override fun onSessionOpened() {
-            //redirectSignupActivity()
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            Log.d("dd","session get current session")
+            return
         }
 
-        override fun onSessionOpenFailed(exception: KakaoException) {
-            if (exception != null) {
-                Logger.e(exception)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    fun getHashKey(context: Context): String? {
+        try {
+            if (Build.VERSION.SDK_INT >= 28) {
+                val packageInfo = getPackageInfo(context, PackageManager.GET_SIGNING_CERTIFICATES)
+                val signatures = packageInfo.signingInfo.apkContentsSigners
+                val md = MessageDigest.getInstance("SHA")
+                for (signature in signatures) {
+                    md.update(signature.toByteArray())
+                    return String(Base64.encode(md.digest(), NO_WRAP))
+                }
+            } else {
+                val packageInfo =
+                    getPackageInfo(context, PackageManager.GET_SIGNATURES) ?: return null
+
+                for (signature in packageInfo!!.signatures) {
+                    try {
+                        val md = MessageDigest.getInstance("SHA")
+                        md.update(signature.toByteArray())
+                        return Base64.encodeToString(md.digest(), Base64.NO_WRAP)
+                    } catch (e: NoSuchAlgorithmException) {
+                        Log.d("hash",
+                            "Unable to get MessageDigest. signature=$signature"
+                        )
+                    }
+                }
             }
-        }
-    }
-
-
-    private fun getHashKey(){
-        var packageInfo : PackageInfo? =null
-        try{
-            packageInfo =packageManager.getPackageInfo(packageName,PackageManager.GET_SIGNATURES)
-        }catch (e:PackageManager.NameNotFoundException ){
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        } catch (e: NoSuchAlgorithmException) {
             e.printStackTrace()
         }
-        if (packageInfo == null) Log.e("KeyHash","Null")
-        for (signature in packageInfo!!.signatures) {
-            try {
-                val md: MessageDigest = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT))
-            } catch (e: NoSuchAlgorithmException) {
-                Log.e(
-                    "KeyHash",
-                    "Unable to get MessageDigest. signature=$signature",
-                    e
-                )
-            }
-        }
 
-
+        return null
     }
 }
