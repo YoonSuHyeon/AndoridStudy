@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -39,5 +40,9 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = RecyclerAdapter(list)
         recyclerView.adapter=adapter
+
+        recyclerView.addItemDecoration( //구분선
+            DividerItemDecoration(this,DividerItemDecoration.VERTICAL)
+        )
     }
 }
