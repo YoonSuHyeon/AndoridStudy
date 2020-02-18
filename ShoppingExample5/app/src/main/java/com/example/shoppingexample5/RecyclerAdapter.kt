@@ -43,6 +43,7 @@ class RecyclerAdapter(private val items:ArrayList<ShoppingItem>,private  val mCo
             Toast.makeText(it.context,"Clicked:${item.title}", Toast.LENGTH_SHORT).show()
             mOnPopupClick(it,item.title)
 
+
         }
         holder.apply {
             bind(listener,item)
