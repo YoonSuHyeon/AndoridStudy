@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FacebookMessengerIntroExample</string>
+    <string name="note">Send and receive SMS from Messenger</string>
+    <string name="contents">Manage all of your conversations in one place nad use stickers and chat heads. SMS conversations are displayed separately in Messenger and are only available via a mobile phone. Standard text message charges will be charged.</string>
+    <string name="btntext">OK</string>
+    <string name="setting">Setting</string>
+</resources>
