@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/note"
         />
     <ImageView
         android:id="@+id/img"
@@ -19,7 +19,7 @@
         android:maxWidth="500dp"
         android:maxHeight="300dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/sample"
+        android:src="@drawable/flag"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
