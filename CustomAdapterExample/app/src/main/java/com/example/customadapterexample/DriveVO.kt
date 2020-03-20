@@ -1,3 +1,3 @@
 package com.example.customadapterexample
 
-class DriveVO(type:String,title:String,data:String)
+class DriveVO(var type:String,var title:String,var date:String)
