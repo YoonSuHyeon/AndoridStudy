@@ -38,13 +38,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         val menuItem: MenuItem = menu.findItem(R.id.menu_main_search)
-        searchView = menuItem.getActionView() as SearchView?
+        searchView = menuItem.actionView as SearchView?
         searchView!!.queryHint = resources.getString(R.string.query_hint)
         searchView!!.setOnQueryTextListener(queryTextListener)
         return true
     }
 
-    var queryTextListener: SearchView.OnQueryTextListener =
+    private var queryTextListener: SearchView.OnQueryTextListener =
         object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 searchView!!.setQuery("", false)
