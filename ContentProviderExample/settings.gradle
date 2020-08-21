@@ -1,0 +1,3 @@
+include ':ExampleProvider'
+include ':app'
+rootProject.name = "ContentProviderExample"
