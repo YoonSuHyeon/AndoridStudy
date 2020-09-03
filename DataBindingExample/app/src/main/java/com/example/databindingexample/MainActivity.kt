@@ -16,6 +16,9 @@ class MainActivity : AppCompatActivity() {
 
     }
     fun onButtonClick(view: View){
-        Toast.makeText(this,"show toast",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,"tt",Toast.LENGTH_SHORT).show()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment,BlankFragment())
+            .commit()
     }
 }
