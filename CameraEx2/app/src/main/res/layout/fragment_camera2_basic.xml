@@ -58,8 +58,6 @@
             android:padding="20dp"
             android:src="@drawable/ic_action_info" />
 
-
-
     </FrameLayout>
 
 </RelativeLayout>

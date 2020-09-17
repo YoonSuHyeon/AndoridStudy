@@ -55,6 +55,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -85,6 +86,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -404,7 +406,7 @@ public class Camera2BasicFragment extends Fragment
      * @return The optimal {@code Size}, or an arbitrary one if none were big enough
      */
     private static Size chooseOptimalSize(Size[] choices, int textureViewWidth,
-            int textureViewHeight, int maxWidth, int maxHeight, Size aspectRatio) {
+                                          int textureViewHeight, int maxWidth, int maxHeight, Size aspectRatio) {
 
         // Collect the supported resolutions that are at least as big as the preview Surface
         List<Size> bigEnough = new ArrayList<>();
@@ -416,7 +418,7 @@ public class Camera2BasicFragment extends Fragment
             if (option.getWidth() <= maxWidth && option.getHeight() <= maxHeight &&
                     option.getHeight() == option.getWidth() * h / w) {
                 if (option.getWidth() >= textureViewWidth &&
-                    option.getHeight() >= textureViewHeight) {
+                        option.getHeight() >= textureViewHeight) {
                     bigEnough.add(option);
                 } else {
                     notBigEnough.add(option);
@@ -471,21 +473,41 @@ public class Camera2BasicFragment extends Fragment
                     myPaint.setStrokeWidth(10);
                     myPaint.setStyle(Paint.Style.STROKE);
                     canvas.drawRect(100, 100, 200, 200, myPaint);*/
+
+
+
+
+
+
+
+
+
+
+
+
                     Display display =  getActivity().getWindowManager().getDefaultDisplay() ;
                     Point size = new Point();
                     display.getRealSize(size); // or getSize(size)
-                     width = size.x;
-                     height = size.y;
+                    width = size.x;
+                    height = size.y;
+
+
+                    Log.d("mTextureView",  mTextureView.getWidth()+"ggg"+ mTextureView.getHeight());
+
+                    Log.d("canvas", canvas.getWidth()+"can"+ canvas.getHeight());
+
+
+
 
                     Paint paint = new Paint();
                     paint.setColor(Color.rgb(100, 20, 50));
-                    canvas.drawRect(width/4,height/4,(width/4)*3,(width/4)*3,paint);
+                    canvas.drawRect(width/2-250,height/2-250,width/2+250,height/2+250,paint);
 
                     paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
                     paint.setColor(Color.argb(70,0,0,0));
                     canvas.drawRect(0,0,width,height,paint);
 
-                   // paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST));
+                    // paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST));
 
                     //paint.setARGB(50,0,0,0);
                     //canvas.drawRect(100,100,200,200,paint);
@@ -591,7 +613,8 @@ public class Camera2BasicFragment extends Fragment
                 Size largest = Collections.max(
                         Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),
                         new CompareSizesByArea());
-                mImageReader = ImageReader.newInstance(largest.getWidth(), largest.getHeight(),
+                Log.d("largest",""+largest.getWidth()+ "    " +largest.getHeight());
+                mImageReader = ImageReader.newInstance(width, height,
                         ImageFormat.JPEG, /*maxImages*/2);
                 mImageReader.setOnImageAvailableListener(
                         mOnImageAvailableListener, mBackgroundHandler);
@@ -641,12 +664,22 @@ public class Camera2BasicFragment extends Fragment
                     maxPreviewHeight = MAX_PREVIEW_HEIGHT;
                 }
 
+
+                Log.d(TAG, "rotatedPreviewWidth: "+rotatedPreviewWidth);
+                Log.d(TAG, "rotatedPreviewHeight: "+rotatedPreviewHeight);
+                Log.d(TAG, "maxPreviewWidth: "+maxPreviewWidth);
+                Log.d(TAG, "maxPreviewHeight: "+maxPreviewHeight);
+                Log.d(TAG, "largest.getHeight(): "+largest.getHeight());
+                Log.d(TAG, "largest.getWidth(): "+largest.getWidth());
                 // Danger, W.R.! Attempting to use too large a preview size could  exceed the camera
                 // bus' bandwidth limitation, resulting in gorgeous previews but the storage of
                 // garbage capture data.
+                // Log.d("함수전 mPreviewSize",mPreviewSize.getWidth()+"ggg"+mPreviewSize.getHeight());
                 mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),
                         rotatedPreviewWidth, rotatedPreviewHeight, maxPreviewWidth,
                         maxPreviewHeight, largest);
+
+                Log.d("함수후 전 mPreviewSize",mPreviewSize.getWidth()+"ggg"+mPreviewSize.getHeight());
 
                 // We fit the aspect ratio of TextureView to the size of preview we picked.
                 int orientation = getResources().getConfiguration().orientation;
@@ -679,7 +712,7 @@ public class Camera2BasicFragment extends Fragment
      * Opens the camera specified by {@link Camera2BasicFragment#mCameraId}.
      */
     private void openCamera(int width, int height) {
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             requestCameraPermission();
             return;
@@ -916,13 +949,16 @@ public class Camera2BasicFragment extends Fragment
                                                @NonNull TotalCaptureResult result) {
                     showToast("Saved: " + mFile);
                     Log.d(TAG, mFile.toString());
-                    Intent intent = new Intent(getActivity(),MainActivity.class);
+
+                    //Intent intent = new Intent(getActivity(),MainActivity.class);
+                    Intent intent = new Intent(getActivity(),GoogleOcrActivitiy.class);
                     intent.putExtra("uri",mFile.getAbsolutePath());
+                    Log.d("Intent 전 mPreviewSize",mPreviewSize.getWidth()+"ggg"+mPreviewSize.getHeight());
                     intent.putExtra("width",width);
                     intent.putExtra("height",height);
                     startActivity(intent);
-                 //   imageView.setImageResource(R.drawable.tile);
-                  //  imageView.setImageURI(Uri.parse(mFile.getAbsolutePath()));
+                    //   imageView.setImageResource(R.drawable.tile);
+                    //  imageView.setImageURI(Uri.parse(mFile.getAbsolutePath()));
                     unlockFocus();
                 }
             };
