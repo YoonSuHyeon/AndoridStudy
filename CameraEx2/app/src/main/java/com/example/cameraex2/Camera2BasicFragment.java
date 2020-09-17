@@ -97,6 +97,8 @@ public class Camera2BasicFragment extends Fragment
     ImageView imageView;
     LinearLayout linearlayout;
     SurfaceView surfaceView;
+    int width ;
+    int height;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static final int REQUEST_CAMERA_PERMISSION = 1;
     private static final String FRAGMENT_DIALOG = "dialog";
@@ -472,10 +474,10 @@ public class Camera2BasicFragment extends Fragment
                     Display display =  getActivity().getWindowManager().getDefaultDisplay() ;
                     Point size = new Point();
                     display.getRealSize(size); // or getSize(size)
-                    int width = size.x;
-                    int height = size.y;
+                     width = size.x;
+                     height = size.y;
 
-                  Paint paint = new Paint();
+                    Paint paint = new Paint();
                     paint.setColor(Color.rgb(100, 20, 50));
                     canvas.drawRect(width/4,height/4,(width/4)*3,(width/4)*3,paint);
 
@@ -916,6 +918,8 @@ public class Camera2BasicFragment extends Fragment
                     Log.d(TAG, mFile.toString());
                     Intent intent = new Intent(getActivity(),MainActivity.class);
                     intent.putExtra("uri",mFile.getAbsolutePath());
+                    intent.putExtra("width",width);
+                    intent.putExtra("height",height);
                     startActivity(intent);
                  //   imageView.setImageResource(R.drawable.tile);
                   //  imageView.setImageURI(Uri.parse(mFile.getAbsolutePath()));
