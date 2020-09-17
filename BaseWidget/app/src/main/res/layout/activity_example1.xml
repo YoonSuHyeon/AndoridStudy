@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context=".Example1">
+
+    <EditText
+        android:layout_weight="0.1"
+        android:id="@+id/Edit1"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"/>
+    <EditText
+        android:layout_weight="0.1"
+        android:id="@+id/Edit2"
+        android:layout_width="50dp"
+        android:layout_margin="16dp"
+        android:layout_height="0dp"/>
+    <Button
+        android:layout_weight="0.15"
+        android:id="@+id/Btn_Add"
+        android:text="더하기"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <Button
+        android:layout_weight="0.15"
+        android:text="빼기"
+        android:id="@+id/Btn_Sub"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <Button
+        android:layout_weight="0.15"
+        android:text="곱하기"
+        android:layout_margin="8dp"
+        android:id="@+id/Btn_Mul"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <Button
+        android:layout_weight="0.15"
+        android:text="나누기"
+        android:layout_margin="8dp"
+        android:id="@+id/Btn_Div"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <TextView
+        android:layout_weight="0.2"
+        android:id="@+id/TextResult"
+        android:gravity="bottom"
+        android:layout_gravity="bottom"
+        android:layout_margin="8dp"
+        android:textColor="#E80909"
+
+        android:textSize="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+</LinearLayout>
