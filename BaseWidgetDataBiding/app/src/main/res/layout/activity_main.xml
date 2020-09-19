@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="data"
+            type="com.example.basewidgetdatabiding.MainActivity" />
+    </data>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFEB3B"
+    tools:context=".MainActivity"
+    >
+
+    <!-- layout_gravity 는 LinearLayout 에대한   gravity 는 안에있는 위젯에대한
+     Padding: 위젯 내,margin :위젯들간 ,visibility invisible 과 gone의 차이 공간확보
+     enabled   , clickable-->
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:text="클릭하세요."
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:enabled="false"
+        android:padding="20dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="button2"
+        android:visibility="visible"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:onClick="@{data::click}"/>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="안녕하세요"/>
+</LinearLayout>
+</layout>
