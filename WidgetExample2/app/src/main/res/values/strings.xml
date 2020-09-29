@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">WidgetExample2</string>
+    <string name="blank">"%d 년 %d 월 %d 일 %d 시 %d 분 예약됨"</string>
+</resources>
