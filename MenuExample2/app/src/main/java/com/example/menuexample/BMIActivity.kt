@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_b_m_i.*
 
 class BMIActivity : AppCompatActivity() {
@@ -30,6 +31,21 @@ class BMIActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
         return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item?.itemId){
+            R.id.menu_logout-> {
+                finishAffinity()
+                val intent = Intent(this,LoginActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.menu_home->{
+               onBackPressed()
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private  fun loadData(){
