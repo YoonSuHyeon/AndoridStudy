@@ -43,7 +43,9 @@ class PhotoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Glide.with(this).load(uri).into(imageView)
     }
-
+    fun getUri():String?{
+        return uri
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
