@@ -15,11 +15,13 @@
         android:layout_height="0dp"
         android:layout_weight="0.1">
         <Button
+            android:id="@+id/btn_start"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="사진보기시작"
             android:layout_height="match_parent"/>
         <Button
+            android:id="@+id/btn_pause"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:text="사진보기중지"
